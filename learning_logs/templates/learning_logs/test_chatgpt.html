@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>OpenAI Chatbot</title>
+</head>
+<body>
+  <h1>OpenAI Chatbot</h1>
+  <div id="chat-container"></div>
+  <form>
+    <input type="text" id="user-input">
+    <button type="submit">Send</button>
+  </form>
+  <textarea id="chat-history" rows="20" cols="80" readonly></textarea>
+
+  <script src="https://cdn.jsdelivr.net/npm/@openai/api"></script>
+  <script>
+    const openai = new OpenAI(api_key="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");
+
+    const $chatContainer = document.querySelector("#chat-container");
+    const $userInput = document.querySelector("#user-input");
+    const $chatHistory = document.querySelector("#chat-history");
+
+    document.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const userInput = $userInput.value;
+      $userInput.value = "";
+      addMessage("You", userInput);
+      sendRequest(userInput);
+    });
+
+    function addMessage(sender, message) {
+      const messageHtml =
+        '<div><strong>' +
+        sender +
+        ':</strong> ' +
+        message +
+        '</div>';
+      $chatContainer.innerHTML += messageHtml;
+      $chatHistory.value += messageHtml + "\n";
+    }
+
+    function addResponse(response) {
+      const responseHtml =
+        '<div><strong>Bot:</strong> ' + response + "</div>";
+      $chatContainer.innerHTML += responseHtml;
+      $chatHistory.value += responseHtml + "\n";
+    }
+
+    async function sendRequest(userInput) {
+      const chatHistory = [$chatContainer.innerHTML];
+      const botResponse = await createOpenAISession();
+      chatHistory.push(botResponse);
+
+      // 生成OpenAI的回应
+      const prompt = chatHistory.slice(-3).concat(userInput).join("\n");
+      const response = await openai.complete({
+        engine: "davinci",
+        prompt: prompt,
+        maxTokens: 1024,
+        n: 1,
+        stop: null,
+        temperature: 0.5,
+      });
+
+      const botResponseText = response.choices[0].text.trim();
+      addResponse(botResponseText);
+    }
+
+    async function createOpenAISession() {
+      const response = await openai.complete({
+        engine: "davinci",
+        prompt: "Hello, how can I assist you today?",
+        maxTokens: 1024,
+        n: 1,
+        stop: null,
+        temperature: 0.5,
+      });
+
+      const botResponseText = response.choices[0].text.trim();
+      addResponse(botResponseText);
+      return botResponseText;
+    }
+  </script>
+</body>
+</html>

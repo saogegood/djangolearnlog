@@ -1,8 +1,4 @@
-
-
-
-
-{% load bootstrap4 %}
+{% load bootstrap4 %} <!-- 加载 Bootstrap 4 模板标签 -->
 
 <!doctype html>
 <html lang="en">
@@ -10,42 +6,42 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scal=1,shrink-to-fit=no">
         <title>Learning Log</title>
-        {% bootstrap_css %}
-        {% bootstrap_javascript jquery='full' %}
+        {% bootstrap_css %} <!-- 引入 Bootstrap 4 的 CSS 样式 -->
+        {% bootstrap_javascript jquery='full' %} <!-- 引入 Bootstrap 4 的 JavaScript 库，包括 jQuery -->
     </head>
 
     <body>
 
         <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
             <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
-                Learning Log</a>
+                Learning Log</a> <!-- 导航栏左侧的品牌名称，点击后跳转到首页 -->
 
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarCollapse" aria-controls="navbarCollapse"
                 aria-expanded="false"  aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span></button>
+                <span class="navbar-toggler-icon"></span></button> <!-- 导航栏右侧的折叠按钮 -->
 
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'learning_logs:topics' %}">
-                            Topics</a></li>
+                            Topics</a></li> <!-- 导航栏左侧的链接，点击后跳转到主题列表页面 -->
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <span class="navbar-text">Hello, {{ user.username }}.</span>
-                        </li>
+                        </li> <!-- 如果用户已经登录，显示欢迎消息 -->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'users:logout' %}">Logout</a>
-                        </li>
+                        </li> <!-- 如果用户已经登录，显示注销链接 -->
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'users:register' %}">Register</a>
-                        </li>
+                        </li> <!-- 如果用户没有登录，显示注册链接 -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:login' %}">Login</a></li>
+                            <a class="nav-link" href="{% url 'users:login' %}">Login</a></li> <!-- 如果用户没有登录，显示登录链接 -->
                     {% endif %}
                 </ul>
             </div>
@@ -54,10 +50,10 @@
         <main role="main" class="container">
             <div class="pb-2 mb-2 border-bottom">
                 {% block page_header %}{% endblock page_header %}
-            </div>
+            </div> <!-- 页面标题，可以在子模板中覆盖 -->
             <div>
                 {% block content %}{% endblock content %}
-            </div>
+            </div> <!-- 页面主要内容，可以在子模板中覆盖 -->
         </main>
 
     </body>

@@ -1,24 +1,29 @@
 {% extends "learning_logs/base.html" %}
 
 {% block page_header %}
+  <!-- 定义页面标题 -->
   <h1>Topics</h1>
 {% endblock page_header %}
 
 {% block content %}
 
+  <!-- 显示标题 -->
   <p>Topics</p>
 
+  <!-- 显示所有主题的列表 -->
   <ul>
     {% for topic in topics %}
       <li><h3>
+        <!-- 链接到主题页面，并显示主题名称 -->
         <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
       </h3></li>
     {% empty %}
+      <!-- 如果没有主题，则显示一条消息 -->
       <li>No topics have been added yet.</li>
     {% endfor %}
   </ul>
 
-
+  <!-- 显示添加新主题的链接 -->
   <h3><a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a></h3>
 
 {% endblock %}

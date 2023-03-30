@@ -1,32 +1,39 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block page_header %}
+  <!-- 标题为当前主题的名称 -->
   <h3>{{ topic }}</h3>
 {% endblock page_header %}
 
 {% block content %}
 
+  <!-- 显示当前主题的名称 -->
   <p>Topic: {{ topic }}</p>
 
-  <p>Entries:</p>
+  <!-- 显示添加新条目的链接 -->
   <p>
-    <!--    这里的 learning_logs:new_entry 中的 new_entry是 urls.py文件 中的 第25行的中的name后面 的值 -->
+    <!-- 这里的 learning_logs:new_entry 中的 new_entry 是 urls.py 中定义的 name -->
     <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
   </p>
 
+  <!-- 显示所有条目的列表 -->
   <ul>
   {% for entry in entries %}
-<div class="card mb-3">
-    <h4 class="card-header">
-      {{ entry.date_added|date:'M d, Y H:i' }}
-      <small><a href="{% url 'learning_logs:edit_entry' entry.id %}"> edit entry</a></small>
-    </h4>
-    <div class="card-body">
-      {{ entry.text|linebreaks }}
+    <!-- 使用 Bootstrap card 显示每个条目的内容 -->
+    <div class="card mb-3">
+      <h4 class="card-header">
+        <!-- 显示条目的创建时间，并提供编辑链接 -->
+        {{ entry.date_added|date:'M d, Y H:i' }}
+        <small><a href="{% url 'learning_logs:edit_entry' entry.id %}"> edit entry</a></small>
+      </h4>
+      <div class="card-body">
+        <!-- 显示条目的文本内容 -->
+        {{ entry.text|linebreaks }}
+      </div>
     </div>
-</div>
 
   {% empty %}
+    <!-- 如果没有条目，则显示一条消息 -->
     <p>There are no entries for this topic yet.</p>
   {% endfor %}
   </ul>

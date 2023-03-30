@@ -1,11 +1,13 @@
-{% extends "learning_logs/base.html" %}
 
-{% block content %}
-<p>Add a new topic:</p>
-	<form action="{% url 'learning_logs:new_topic' %}" method='post'>
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button name="submit">Add topic</button>
+{% extends "learning_logs/base.html" %} <!-- 继承base.html模板 -->
+
+{% block content %} <!-- content块由子模板定义 -->
+<p>Add a new topic:</p> <!-- 提示用户添加新话题 -->
+
+	<form action="{% url 'learning_logs:new_topic' %}" method='post'> <!-- 提交表单，url指向new_topic视图函数 -->
+      {% csrf_token %} <!-- 防止CSRF攻击 -->
+      {{ form.as_p }} <!-- 渲染表单 -->
+      <button name="submit">Add topic</button> <!-- 提交按钮 -->
     </form>
 
-{% endblock content %}
+{% endblock content %} <!-- 结束content块 --> ♨

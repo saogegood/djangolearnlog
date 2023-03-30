@@ -1,13 +1,22 @@
+<!-- 引入 base.html 模板 -->
 {% extends "learning_logs/base.html" %}
 
 {% block content %}
+<!-- 显示当前主题名称，并添加链接到该主题的详细页面 -->
+<p>
+  <a href="{% url 'learning_logs:topic' topic.id %}">
+    <!-- 显示主题名称 -->
+    {{ topic }}
+  </a>
+</p>
 
-<p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
-
+<!-- 显示添加新条目的表单 -->
 <p>Add a new entry:</p>
 <form action="{% url 'learning_logs:new_entry' topic.id %}" method="post" >
   {% csrf_token %}
+  <!-- 显示表单字段 -->
   {{ form.as_p }}
+  <!-- 显示提交按钮 -->
   <button name='submit'>Add entry</button>
 </form>
 

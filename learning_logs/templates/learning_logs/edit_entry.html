@@ -1,15 +1,23 @@
+<!-- 引入 "learning_logs/base.html" 模板文件 -->
 {% extends "learning_logs/base.html" %}
 
+<!-- 定义 content 区块 -->
 {% block content %}
 
+<!-- 显示当前主题的链接 -->
 <p><a href="{% url 'learning_logs:topic' topic.id %>">{{ topic }}</a></p>
 
+<!-- 显示编辑条目的表单 -->
 <p>Edit entry:</p>
 
+<!-- 提交表单，使用 POST 方法 -->
 <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
   {% csrf_token %}
+  <!-- 显示表单字段 -->
   {{ form.as_p }}
+  <!-- 提交按钮 -->
   <button name="submit">Save changes</button>
 </form>
 
+<!-- 结束 content 区块 -->
 {% endblock content %}
