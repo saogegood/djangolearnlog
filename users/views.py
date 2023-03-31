@@ -6,7 +6,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
-    """注册新用户。123"""
+    """注册新用户。"""
     if request.method != 'POST':
         # 显示空`的注册表单。
         form = UserCreationForm()
